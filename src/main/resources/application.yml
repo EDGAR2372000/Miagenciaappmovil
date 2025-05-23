@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: api-transport
+
+  jpa:
+    database: postgresql
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost/transport_db
+    username: postgres
+    password: sistemas
+
+server:
+  servlet:
+    context-path: /api/v1
+
+jwt:
+  secret: fd7c01793e4b46213b99a9cccf3847ca9baa692ad75fb9dad79902ee7758f2cbf6f8b4b791f826d216938d65e5a9a6db75155db42ae80a261c8c77499c9e15f8

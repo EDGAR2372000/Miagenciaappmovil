@@ -1,0 +1,40 @@
+<ion-content class="ion-padding">
+  <div class="header-image">
+    <div class="overlay"></div>
+  </div>
+
+  <div class="form-container">
+    <h2 class="header-title">Bienvenido de nuevo</h2>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+
+      <ion-item lines="none">
+        <ion-icon name="mail-outline" slot="start"></ion-icon>
+        <ion-input
+          placeholder="Correo Electrónico"
+          type="email"
+          formControlName="username"
+          appUppercase
+        ></ion-input>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+        <ion-input
+          placeholder="Contraseña"
+          type="password"
+          formControlName="password"
+        ></ion-input>
+      </ion-item>
+
+
+      <ion-button expand="block" class="login-button" type="submit">
+        INICIAR SESIÓN
+      </ion-button>
+    </form>
+
+    <div class="login-footer">
+      ¿No tienes cuenta? <a (click)="goToRegister()">Regístrate</a>
+    </div>
+  </div>
+</ion-content>
