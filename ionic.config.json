@@ -1,0 +1,7 @@
+{
+  "name": "app-transport",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

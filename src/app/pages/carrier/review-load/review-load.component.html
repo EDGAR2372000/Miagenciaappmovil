@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/pages/loads" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Revisar Carga</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Sección solo lectura: datos de la LoadRequest -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        {{ load?.origin }} → {{ load?.destination }}
+      </ion-card-title>
+      <ion-card-subtitle>
+        {{ load?.datetime | date:'short' }}
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Detalles:</strong> {{ load?.loadDetails }}</p>
+      <p><strong>Peso:</strong> {{ load?.weight }}</p>
+      <p><strong>Tarifa:</strong> {{ load?.tariff | currency:'PEN':'symbol':'1.2-2' }}</p>
+      <p><strong>Operación:</strong> {{ load?.operation }}</p>
+      <!-- <p><strong>Estado:</strong>
+        <ion-badge [color]="statusColor(load?.status)">{{ load?.status }}</ion-badge>
+      </p> -->
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Formulario de Request editable -->
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="request-form">
+    <ion-item>
+      <ion-label position="stacked">Precio sugerido (S/)</ion-label>
+      <ion-input
+        formControlName="suggestedPrice"
+        type="text"
+        inputmode="decimal"
+        (ionBlur)="formatPrice()"
+        placeholder="Opcional"
+        appOnlyNumbers>
+      </ion-input>
+    </ion-item>
+    <ion-note
+      color="danger"
+      *ngIf="form.get('suggestedPrice')?.touched && form.get('suggestedPrice')?.hasError('required')">
+      Precio sugerido es obligatorio
+    </ion-note>
+
+    <!-- <ion-item>
+      <ion-label position="stacked">Estado de la solicitud</ion-label>
+      <ion-select formControlName="status" required>
+        <ion-select-option value="PENDING">Pendiente</ion-select-option>
+        <ion-select-option value="ACCEPTED">Aceptada</ion-select-option>
+        <ion-select-option value="REJECTED">Rechazada</ion-select-option>
+      </ion-select>
+    </ion-item> -->
+    <!-- <ion-note
+      color="danger"
+      *ngIf="form.get('status')?.touched && form.get('status')?.hasError('required')">
+      Estado es obligatorio
+    </ion-note> -->
+
+    <ion-button
+      expand="block"
+      type="submit"
+      [disabled]="form.invalid"
+      class="submit-btn">
+      Enviar Solicitud
+    </ion-button>
+  </form>
+</ion-content>

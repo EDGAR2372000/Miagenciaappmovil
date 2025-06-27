@@ -1,0 +1,49 @@
+ion-searchbar {
+    --background: var(--ion-color-light);
+    --border-radius: 8px;
+  }
+  
+  .meta {
+    display: flex;
+    align-items: center;
+    margin-top: 0.5rem;
+  }
+  
+  .meta .datetime {
+    margin-left: 1rem;
+    color: var(--ion-color-medium);
+    font-size: 0.8rem;
+  }
+  
+  .empty-state {
+    text-align: center;
+    margin-top: 40%;
+    color: var(--ion-color-medium);
+  }
+  
+  .empty-state p {
+    margin-bottom: 1rem;
+  }
+  
+  ion-item-sliding ion-label h2 {
+    margin: 0;
+    font-size: 1.1rem;
+  }
+  
+  ion-item-sliding ion-label p {
+    margin: 0.2rem 0;
+    font-size: 0.9rem;
+  }
+  
+  /* Opcional: estilo para botones deshabilitados */
+.disabled-option {
+  opacity: 0.5;
+}
+
+/* Reusa tus estilos previos */
+ion-searchbar {
+  --background: var(--ion-color-light);
+  --border-radius: 8px;
+}
+
+/* ... resto de estilos ... */

@@ -1,0 +1,127 @@
+<ion-content class="ion-padding">
+  <ng-container *ngIf="isLoading | async">
+    <div class="loading-overlay">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  </ng-container>
+  
+  <!-- Header Image with Overlay -->
+  <div class="header-image">
+    <div class="overlay"></div>
+  </div>
+
+  <!-- Title -->
+  <h1 class="header-title" [hidden]="showFields">¿Qué tipo de usuario eres?</h1>
+  <h1 class="header-title" [hidden]="!showFields">Crea tu cuenta</h1>
+
+  <form [formGroup]="registroForm" (ngSubmit)="operate()">
+    <!-- Role Selection -->
+    <ion-item lines="full">
+      <ion-icon name="person-outline" slot="start"></ion-icon>
+      <!-- <ion-label position="stacked">Tipo de Usuario</ion-label> -->
+      <ion-select placeholder="Usuario" formControlName="typeUser" (ionChange)="onRoleChange($event)" interface="popover">
+        <ion-select-option [value]="client">{{client}}</ion-select-option>
+        <ion-select-option [value]="carrier">EMPRESA</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Common Fields -->
+     <div [hidden]="!showFields">
+      <!-- Conditional Fields for Transportista -->
+      <div *ngIf="registroForm.get('typeUser').value === 'TRANSPORTISTA'" class="conditional-fields">
+        <ion-item lines="full">
+          <ion-icon name="document-text-outline" slot="start"></ion-icon>
+          <!-- <ion-label position="stacked">Licencia de Conducir</ion-label> -->
+          <ion-input placeholder="RUC" formControlName="rucCompany" type="text" maxlength="11" appOnlyNumbers></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="registroForm.get('rucCompany').touched && registroForm.get('rucCompany').hasError('required')">
+          <small>El RUC es requerido.</small>
+        </ion-text>
+        <ion-text
+        color="danger"
+        *ngIf="
+          registroForm.get('rucCompany').touched &&
+          (registroForm.get('rucCompany').hasError('minlength') ||
+           registroForm.get('rucCompany').hasError('maxlength'))
+        "
+      >
+        <small>El RUC debe tener exactamente 11 dígitos.</small>
+      </ion-text>
+         
+
+        <ion-item lines="full">
+          <ion-icon name="car-outline" slot="start"></ion-icon>
+          <!-- <ion-label position="stacked">Placa del Vehículo</ion-label> -->
+          <ion-input placeholder="Empresa" formControlName="nameCompany" type="text" maxlength="7" appUppercase></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="registroForm.get('nameCompany').touched && registroForm.get('nameCompany').invalid">
+          <small>Nombre de la Empresa es requerido.</small>
+        </ion-text>
+      </div>
+
+      <div *ngIf="registroForm.get('typeUser').value === 'CLIENTE'" class="conditional-fields">
+        <ion-item lines="full">
+          <ion-icon name="card-outline" slot="start"></ion-icon>
+          <!-- <ion-label position="stacked">DNI</ion-label> -->
+          <ion-input placeholder="DNI" formControlName="dni" type="text" maxlength="8" appOnlyNumbers></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="registroForm.get('dni').touched && registroForm.get('dni').invalid">
+          <small>DNI debe tener exactamente 8 dígitos.</small>
+        </ion-text>
+
+        <ion-item lines="full">
+          <ion-icon name="person-outline" slot="start"></ion-icon>
+          <ion-input placeholder="Nombre Completo" formControlName="fullName" type="text" maxlength="80" appUppercase></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="registroForm.get('fullName').touched && registroForm.get('fullName').invalid">
+          <small>El nombre completo es requerido.</small>
+        </ion-text> 
+      </div>
+
+      <!-- <ion-item lines="full">
+        <ion-icon name="person-outline" slot="start"></ion-icon>
+        <ion-input placeholder="Nombre Completo" formControlName="fullName" type="text" maxlength="80" appUppercase></ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="registroForm.get('fullName').touched && registroForm.get('fullName').invalid">
+        <small>El nombre completo es requerido.</small>
+      </ion-text> -->
+
+      <ion-item lines="full">
+        <ion-icon name="call-outline" slot="start"></ion-icon>
+        <!-- <ion-label position="stacked">Teléfono</ion-label> -->
+        <ion-input placeholder="Teléfono" formControlName="phone" type="tel" maxlength="9" appOnlyNumbers></ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="registroForm.get('phone').touched && registroForm.get('phone').invalid">
+        <small>Teléfono debe tener exactamente 9 dígitos.</small>
+      </ion-text>
+
+      <ion-item lines="full">
+        <ion-icon name="mail-outline" slot="start"></ion-icon>
+        <!-- <ion-label position="stacked">Correo Electrónico</ion-label> -->
+        <ion-input placeholder="Correo Electrónico" formControlName="email" type="email" maxlength="60" appUppercase></ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="registroForm.get('email').touched && registroForm.get('email').invalid">
+        <small>Correo inválido o requerido.</small>
+      </ion-text>
+
+      <ion-item lines="full">
+        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+        <!-- <ion-label position="stacked">Contraseña</ion-label> -->
+        <ion-input placeholder="Contraseña" formControlName="password" type="password" maxlength="60"></ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="registroForm.get('password').touched && registroForm.get('password').invalid">
+        <small>Contraseña debe tener al menos 6 caracteres.</small>
+      </ion-text>
+
+      <!-- Submit Button -->
+      <ion-button expand="block" type="submit" [disabled]="!registroForm.valid" class="register-button">
+        REGISTRARSE
+      </ion-button>
+
+      <!-- Footer Link -->
+      <div class="register-footer">
+        <p>¿No tienes cuenta? <a (click)="goToLogin()">Iniciar Sesión</a></p>
+      </div>
+    </div>
+  </form>
+</ion-content>

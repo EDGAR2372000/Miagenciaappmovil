@@ -1,0 +1,67 @@
+<ion-content class="ion-padding">
+  <ng-container *ngIf="isLoading | async">
+    <div class="loading-overlay">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  </ng-container>
+  
+  <div class="header-image">
+    <div class="overlay"></div>
+  </div>
+
+  <div class="form-container">
+    <h2 class="header-title">Bienvenido de nuevo</h2>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+
+      <ion-item lines="none">
+        <ion-icon name="mail-outline" slot="start"></ion-icon>
+        <ion-input
+          placeholder="Email"
+          type="email"
+          formControlName="username"
+          appUppercase
+        ></ion-input>
+      </ion-item>
+      @if (loginForm.get('username').touched && loginForm.get('username').hasError('required')) {
+        <ion-text color="danger">
+          <small>El email es obligatorio.</small>
+        </ion-text>
+      }@else if(loginForm.get('username').touched && loginForm.get('username').hasError('email')) {
+        <ion-text color="danger">
+          <small>El email no es válido.</small>
+        </ion-text>
+      }@else if(loginForm.get('username').touched && loginForm.get('username').hasError('maxlength')) {
+        <ion-text color="danger">
+          <small>El email no puede tener más de 60 caracteres.</small>
+        </ion-text>
+      }
+
+      <ion-item lines="none">
+        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+        <ion-input
+          placeholder="Contraseña"
+          type="password"
+          formControlName="password"
+        ></ion-input>
+      </ion-item>
+      @if (loginForm.get('password').touched && loginForm.get('password').hasError('required')) {
+        <ion-text color="danger">
+          <small>La contraseña es obligatorio.</small>
+        </ion-text>
+      }@else if(loginForm.get('password').touched && loginForm.get('password').hasError('minlength')) {
+        <ion-text color="danger">
+          <small>La contraseña debe tener mínimo 6 caracteres.</small>
+        </ion-text>
+      }
+
+      <ion-button expand="block" class="login-button" type="submit" [disabled]="loginForm.invalid">
+        INICIAR SESIÓN
+      </ion-button>
+    </form>
+
+    <div class="login-footer">
+      ¿No tienes cuenta? <a (click)="goToRegister()">Regístrate</a>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,109 @@
+// ion-content {
+//   --background: #ffffff;
+// }
+
+.header-image {
+  position: relative;
+  height: 150px;
+  background: url('/assets/images/auth/register-header.jpg') no-repeat center center;
+  background-size: cover;
+  border-radius: 5px;  /* redondea sólo la parte inferior */
+  overflow: hidden;               /* asegura que el overlay y la imagen queden dentro */
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4); /* Semi-transparent overlay */
+}
+
+.header-title {
+  font-size: 18px;
+  font-weight: 700;
+ // text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #333;
+  text-align: center;
+  margin: 20px 0;
+}
+
+ion-item {
+  --background: #f1f1f1;
+  --border-color: transparent;
+  margin: 10px 0;
+  border-radius: 8px;
+}
+
+ion-icon {
+  color: #666;
+  font-size: 20px;
+}
+
+ion-label {
+  font-size: 15px;
+  color: #333 !important;
+  font-weight: 400;
+}
+
+ion-input {
+  font-size: 16px;
+  color: #444;
+}
+
+ion-select {
+  font-size: 16px;
+  color: #444;
+}
+
+ion-text {
+  display: block;
+  margin-left: 16px;
+  margin-top: -5px;
+  font-size: 16px;
+}
+
+.register-button {
+  margin-top: 20px;
+  --background: #007bff;
+  --color: #ffffff;
+  --border-radius: 25px;
+  height: 50px;
+  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.register-button:disabled {
+  --background: #cccccc;
+  --color: #666666;
+  opacity: 0.7;
+}
+
+.register-footer {
+  text-align: center;
+  margin-top: 15px;
+  color: #666;
+  font-size: 14px;
+}
+
+.register-footer a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

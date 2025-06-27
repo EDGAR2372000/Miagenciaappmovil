@@ -1,0 +1,73 @@
+ion-searchbar {
+  --background: var(--ion-color-light);
+  --border-radius: 8px;
+}
+
+.empty-state {
+  text-align: center;
+  margin-top: 40%;
+  color: var(--ion-color-medium);
+}
+
+.empty-state p {
+  margin-bottom: 1rem;
+}
+
+ion-item-sliding ion-label h2 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+ion-item-sliding ion-label p {
+  margin: 0.2rem 0;
+  font-size: 0.9rem;
+}
+
+ion-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+ion-item .meta {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+ion-item .meta ion-badge {
+  margin-bottom: 4px;
+}
+
+ion-item .meta .datetime {
+  font-size: 0.75rem;
+  color: var(--ion-color-medium);
+}
+
+
+
+/* 2) Refuerzo con selector “profundo” para versiones anteriores */
+:host ::ng-deep ion-searchbar .searchbar-input {
+  text-transform: uppercase !important;
+}
+:host ::ng-deep ion-searchbar .searchbar-input::placeholder {
+  text-transform: uppercase !important;
+}
+
+
+
+/* load-request.component.scss */
+
+.notification-button {
+  border-radius: 50%; /* circula para destacar */
+  transition: background 0.2s;
+
+  /* Cuando no está activo: fondo transparente */
+  --background: transparent;
+
+  &.active {
+    /* Cuando está activo (isViewingPending===true) */
+    --background: rgba(var(--ion-color-primary-rgb), 0.1); /* azul claro de fondo */
+  }
+}

@@ -1,0 +1,41 @@
+ion-card {
+    margin-bottom: 1.5rem;
+  }
+  
+  .request-form {
+    ion-item {
+      margin-bottom: 1rem;
+    }
+  
+    ion-note {
+      margin-left: 1.5rem;
+      font-size: 0.8rem;
+    }
+  
+    .submit-btn {
+      margin-top: 1.2rem;
+    }
+  }
+  
+  ion-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  ion-item .meta {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  
+  ion-item .meta ion-badge {
+    margin-bottom: 4px;
+  }
+  
+  ion-item .meta .datetime {
+    font-size: 0.75rem;
+    color: var(--ion-color-medium);
+  }
+  

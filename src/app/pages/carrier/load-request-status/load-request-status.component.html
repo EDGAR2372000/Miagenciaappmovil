@@ -1,0 +1,95 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Ordenes de Carga</ion-title>
+
+    <ion-buttons slot="end" >
+      <!-- Icono de notificaciones -->
+      <ion-button (click)="toggleAssignedView()" class="notification-button">
+        <ion-icon slot="icon-only" name="notifications-outline" [name]="isViewingAssigned ? 'notifications' : 'notifications-outline'"  [color]="isViewingAssigned ? 'primary' : ''"></ion-icon>
+        <ion-badge *ngIf="pendingCount > 0" color="danger" slot="end">
+          {{ pendingCount > 99 ? '99+' : pendingCount }}
+        </ion-badge>
+      </ion-button>
+      <!-- Botón crear -->
+      <!-- <ion-button (click)="onCreate()">
+        <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+      </ion-button> -->
+    </ion-buttons>
+  </ion-toolbar>
+
+  <!-- Searchbar para filtrar la vista actual -->
+  <ion-toolbar>
+    <ion-searchbar
+      placeholder="Buscar por origen, destino o estado"
+      [(ngModel)]="filterText"
+      (ionInput)="applyFilter()">
+    </ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list *ngIf="filteredRequests.length > 0; else noData">
+    <ion-item-sliding *ngFor="let req of filteredRequests">
+      <ion-item>
+        <ion-label>
+          <h2>{{ req.origin }} → {{ req.destination }}</h2>
+          <p>{{ req.loadDetails }}</p>
+          <p><strong>N° Operación:</strong> {{ req.operation }}</p>
+          <p>
+            <strong>Peso:</strong> {{ req.weight }} |
+            <strong>Tarifa:</strong>
+            {{ req.tariff | currency:'PEN':'symbol':'1.2-2' }}
+          </p>
+          <div class="meta">
+            <ion-badge [color]="statusColor(req.status)">{{ req.status }}</ion-badge>
+            <small class="datetime">{{ req.datetime | date:'short' }}</small>
+          </div>
+
+          <!-- Si estamos viendo “Pendientes”, mostramos el conteo de Requests en PENDIENTE -->
+          <ng-container *ngIf="isViewingAssigned">
+            <p>
+              <ion-icon name="alert-circle-outline"></ion-icon>
+              Solicitudes pendientes:
+              {{ req.pendingRequestsCount }}
+            </p>
+          </ng-container>
+        </ion-label>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <!-- Editar sólo en vista completa -->
+        <ion-item-option
+          color="primary"
+          (click)="onEdit(req)"
+          [disabled]="isViewingAssigned">
+          <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+        </ion-item-option>
+
+        <!-- Revisar/invocar detalle de solicitudes -->
+        <!-- <ion-item-option color="warning" (click)="onReview(req)">
+          <ion-icon slot="icon-only" name="folder-open-outline"></ion-icon>
+        </ion-item-option>
+
+        <ion-item-option color="danger" (click)="onDelete(req)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-item-option> -->
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <ng-template #noData>
+    <div class="empty-state">
+      <p *ngIf="!isViewingAssigned">No hay asignaciones de carga.</p>
+      <p *ngIf="isViewingAssigned">No hay asignaciones pendientes.</p>
+      <ion-button *ngIf="!isViewingAssigned" (click)="onCreate()">
+        Crear primera solicitud
+      </ion-button>
+      <ion-button *ngIf="isViewingAssigned" (click)="loadData()">
+        Actualizar asignaciones
+      </ion-button>
+    </div>
+  </ng-template>
+</ion-content>

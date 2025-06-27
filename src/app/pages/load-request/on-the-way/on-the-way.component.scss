@@ -1,0 +1,62 @@
+.timeline-row {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  padding: 1.5rem 0;
+  overflow-x: auto;
+}
+
+.timeline-step {
+  flex: 1 1 20%;
+  text-align: center;
+  position: relative;
+
+  .icon-wrapper {
+    width: 3rem;
+    height: 3rem;
+    margin: 0 auto;
+    border-radius: 50%;
+    background: #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.6rem;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+
+  .connector {
+    height: 4px;
+    width: 100%;
+    position: absolute;
+    top: 1.5rem;
+    left: 50%;
+    transform: translateX(0%);
+    z-index: 0;
+    transition: background 0.3s ease;
+  }
+
+  .label {
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    color: #666;
+  }
+
+  &.done .label {
+    color: #000;
+    font-weight: 600;
+  }
+
+  &.current .icon-wrapper {
+    border: 4px solid white;
+    transform: scale(1.2);
+    box-shadow: 0 0 12px var(--ion-color-primary);
+  }
+
+  &.current .label {
+    color: var(--ion-color-primary);
+    font-weight: bold;
+  }
+}
+

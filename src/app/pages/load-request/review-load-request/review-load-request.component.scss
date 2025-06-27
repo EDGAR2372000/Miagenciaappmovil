@@ -1,0 +1,54 @@
+ion-card {
+    margin-bottom: 1.5rem;
+  }
+  
+  ion-list ion-item {
+    --inner-padding-end: 0; /* que los botones estén justos al borde */
+  }
+  
+  ion-item-sliding ion-label h2 {
+    margin: 0;
+    font-size: 1.1rem;
+  }
+  
+  ion-item-sliding ion-label p {
+    margin: 0.2rem 0;
+    font-size: 0.9rem;
+  }
+  
+  ion-item-options {
+    width: auto;
+  }
+  
+  .empty-state {
+    text-align: center;
+    margin-top: 40%;
+    color: var(--ion-color-medium);
+  }
+  
+  ion-item-options ion-item-option[disabled] {
+    opacity: 0.4;
+  }
+  
+  ion-item-options {
+    width: auto;
+  }
+  
+  ion-item-sliding:not(:first-child) {
+    margin-top: 0.5rem;
+  }
+  
+
+  .loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  

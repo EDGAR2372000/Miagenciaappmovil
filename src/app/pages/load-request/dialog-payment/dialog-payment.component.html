@@ -1,0 +1,89 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>Método de Pago</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list lines="none">
+    <ion-item>
+      <ion-label>
+        <h3>Empresa:</h3>
+        <p>{{ companyName }}</p>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <h3>Banco:</h3>
+        <p>{{ bankName }}</p>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <h3>N° Cuenta:</h3>
+        <p>{{ accountNumber }}</p>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <h3>CCI:</h3>
+        <p>{{ interbankCode }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-item>
+    <input type="file" accept="image/*" (change)="onFileChange($event)" />
+  </ion-item>
+  <div *ngIf="previewSrc" class="preview">
+    <img [src]="previewSrc" />
+  </div>
+
+  <ion-button expand="block" (click)="submit()">Confirmar Pago</ion-button>
+</ion-content> -->
+
+<ion-content class="ion-padding">
+  <div class="card-preview" style="text-align: center; margin-bottom: 20px;">
+    <canvas #cardCanvas width="340" height="200"></canvas>
+  </div>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <ion-item>
+      <ion-label position="stacked">Número de Tarjeta</ion-label>
+      <ion-input formControlName="cardNumber" maxlength="16" inputmode="numeric" placeholder="1234123412341234"></ion-input>
+    </ion-item>
+    <ion-note color="danger" *ngIf="form.get('cardNumber')?.touched && form.get('cardNumber')?.hasError('pattern')">
+      Debe ser 16 dígitos
+    </ion-note>
+
+    <ion-item>
+      <ion-label position="stacked">Titular</ion-label>
+      <ion-input formControlName="cardHolder" placeholder="NOMBRE TITULAR" appUppercase></ion-input>
+    </ion-item>
+    <ion-note color="danger" *ngIf="form.get('cardHolder')?.touched && form.get('cardHolder')?.hasError('required')">
+      Nombre es obligatorio
+    </ion-note>
+
+    <ion-item>
+      <ion-label position="stacked">Expiración (MM/YY)</ion-label>
+      <ion-input formControlName="expiration" maxlength="5" placeholder="MM/YY"></ion-input>
+    </ion-item>
+    <ion-note color="danger" *ngIf="form.get('expiration')?.touched && form.get('expiration')?.hasError('pattern')">
+      Formato MM/YY
+    </ion-note>
+
+    <ion-item>
+      <ion-label position="stacked">CCV</ion-label>
+      <ion-input formControlName="ccv" maxlength="4" inputmode="numeric" placeholder="123"></ion-input>
+    </ion-item>
+    <ion-note color="danger" *ngIf="form.get('ccv')?.touched && form.get('ccv')?.hasError('pattern')">
+      3 o 4 dígitos
+    </ion-note>
+
+    <ion-button expand="block" type="submit" [disabled]="form.invalid">
+      Pagar
+    </ion-button>
+  </form>
+</ion-content>

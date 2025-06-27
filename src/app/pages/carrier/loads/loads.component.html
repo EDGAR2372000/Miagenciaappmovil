@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Cargas Disponibles</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar
+      placeholder="Buscar por origen, destino o peso"
+      [(ngModel)]="filterText"
+      (ionInput)="applyFilter()">
+    </ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list *ngIf="filteredLoads.length > 0; else noData">
+    <ion-item-sliding *ngFor="let load of filteredLoads">
+      <ion-item>
+        <ion-label>
+          <h2>{{ load?.origin }} → {{ load?.destination }}</h2>
+          <p>{{ load?.loadDetails }}</p>
+          <p>
+            <strong>Peso:</strong> {{ load.weight }} |
+            <strong>Tarifa:</strong>
+            {{ load?.tariff | currency:'PEN':'symbol':'1.2-2' }}
+          </p>
+          <div class="meta">
+            <ion-badge color="primary">PUBLICADA</ion-badge>
+            <small class="datetime">
+              {{ load?.datetime | date:'short' }}
+            </small>
+          </div>
+        </ion-label>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option
+        color="secondary"
+        (click)="onReview(load)"
+        [disabled]="load.alreadyRequested"
+        [class.disabled-option]="load.alreadyRequested">
+        <ion-icon slot="start" name="eye-outline"></ion-icon>
+        {{ load.alreadyRequested ? 'Ya solicitado' : 'Revisar' }}
+      </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <ng-template #noData>
+    <div class="empty-state">
+      <p>No hay cargas publicadas en este momento.</p>
+      <ion-button (click)="reload()">Actualizar</ion-button>
+    </div>
+  </ng-template>
+</ion-content>

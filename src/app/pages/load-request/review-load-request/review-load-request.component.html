@@ -1,0 +1,81 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/pages/loads-requests" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Solicitudes Recibidas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ng-container *ngIf="loaderService.isLoading| async">
+    <div class="loading-overlay">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  </ng-container>
+  <!-- Detalles de la carga -->
+  <ion-card *ngIf="load">
+    <ion-card-header>
+      <ion-card-title>{{ load.origin }} → {{ load.destination }}</ion-card-title>
+      <ion-card-subtitle>{{ load.datetime | date:'short' }}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Detalles:</strong> {{ load.loadDetails }}</p>
+      <p><strong>Peso:</strong> {{ load.weight }}</p>
+      <p><strong>Tarifa:</strong> {{ load.tariff | currency:'PEN':'symbol':'1.2-2' }}</p>
+      <p><strong>Operación:</strong> {{ load.operation }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Lista de solicitudes (requests) -->
+  <ion-list *ngIf="requests?.length; else noRequests">
+    <ion-item-sliding *ngFor="let req of requests">
+      <ion-item>
+        <ion-label>
+          <h2>{{ req.carrier.nameCompany }}</h2>
+          <p><strong>RUC:</strong> {{ req.carrier.rucCompany }}</p>
+          <p><strong>Teléfono:</strong> {{ req.carrier.phone }}</p>
+          <p><strong>Precio sugerido:</strong> {{ req.suggestedPrice | currency:'PEN':'symbol':'1.2-2' }}</p>
+          <p><small>{{ req.datetime | date:'short' }}</small></p>
+          <ion-badge [color]="badgeColor(req.status)">{{ req.status }}</ion-badge>
+        </ion-label>
+      </ion-item>
+  
+      <ion-item-options side="end">
+        <!-- Caso ACEPTADO: mostrar icono de ver comprobante -->
+        <ion-item-option
+          *ngIf="req.status === 'ACEPTADO'"
+          color="tertiary"
+          (click)="viewProof(req.urlPdfContract)"
+        >
+          <ion-icon slot="icon-only" name="eye-outline"></ion-icon>
+        </ion-item-option>
+  
+        <!-- Para PENDIENTE o RECHAZADO, mostramos botones deshabilitados -->
+        <ion-item-option
+          color="success"
+          (click)="onChangeStatus(req, 'ACEPTADO')"
+          [disabled]="req.status !== 'PENDIENTE'">
+          <ion-icon slot="icon-only" name="checkmark-done-outline"></ion-icon>
+          <!-- Aceptar -->
+        </ion-item-option>
+        <ion-item-option
+          color="danger"
+          (click)="onChangeStatus(req, 'RECHAZADO')"
+          [disabled]="req.status !== 'PENDIENTE'">
+          <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+          <!-- Rechazar -->
+        </ion-item-option>
+      </ion-item-options>
+  
+    </ion-item-sliding>
+  </ion-list>
+  
+
+  <ng-template #noRequests>
+    <div class="empty-state">
+      <p>No hay solicitudes aún.</p>
+    </div>
+  </ng-template>
+
+</ion-content>

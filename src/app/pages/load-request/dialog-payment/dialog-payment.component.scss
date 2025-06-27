@@ -1,0 +1,19 @@
+card-preview {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+canvas {
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+ion-item {
+  margin-bottom: 1rem;
+}
+ion-note {
+  margin-left: 1.5rem;
+  font-size: 0.8rem;
+}
+ion-button {
+  margin-top: 1.2rem;
+}
